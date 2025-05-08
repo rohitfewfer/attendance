@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Summary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f9f9f9;
+    }
+    .subject-btn.marked {
+      background-color: #28a745;
+      color: white;
+    }
+    .subject-btn {
+      margin: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <h2 class="text-center mb-4">Attendance Dashboard</h2>
+
+    <!-- Weekly Timetable -->
+    <div class="card mb-4">
+      <div class="card-header">
+        Weekly Timetable
+      </div>
+      <div class="card-body p-2">
+        <table class="table table-bordered table-sm text-center align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Day</th>
+              <th>Subjects</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for day, subs in timetable.items() %}
+            <tr class="{% if day == today %}table-success{% endif %}">
+              <td><strong>{{ day }}</strong></td>
+              <td>
+                {% for s in subs %}
+                <form method="POST" action="/mark" class="d-inline">
+                  <input type="hidden" name="subject" value="{{ s }}">
+                  <button type="submit"
+                          class="btn btn-outline-primary btn-sm subject-btn {% if day == today and s in marked %}marked{% endif %}"
+                          {% if day != today %}disabled{% endif %}>
+                    {{ s }}
+                  </button>
+                </form>
+                {% endfor %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Summary Panel -->
+    <div class="card">
+      <div class="card-header">
+        <strong>{{ today }}'s Summary</strong>
+      </div>
+      <div class="card-body">
+        <p><strong>Attended:</strong> {{ attended }} / {{ total }}</p>
+        <p><strong>Percent:</strong> {{ percent_today }}%</p>
+        <form method="POST" action="/save_day" class="d-inline">
+          <button class="btn btn-success">Save Day</button>
+        </form>
+        <form method="POST" action="/reset" class="d-inline">
+          <button class="btn btn-danger">Reset Day</button>
+        </form>
+        <hr>
+        <h5>Overall Records</h5>
+        <p><strong>Average Attendance:</strong> {{ overall_percent }}%</p>
+        <ul class="list-group list-group-flush mb-3">
+          {% for d, a, t, p in history %}
+          <li class="list-group-item">{{ d }}: {{ a }}/{{ t }} ({{ p }}%)</li>
+          {% endfor %}
+        </ul>
+        <form method="POST" action="/reset_summary">
+          <button class="btn btn-warning">Reset History</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="mt-4 text-center">
+      <a href="/attended" class="btn btn-outline-secondary me-2">View Attended Classes</a>
+      <a href="/summary" class="btn btn-outline-secondary me-2">Saved Summaries</a>
+      <a href="/" class="btn btn-outline-primary me-2">Home</a>
+      <a href="/admin" class="btn btn-outline-dark">Admin Panel</a>
+    </div>
+  </div>
+</body>
+</html>

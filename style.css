@@ -1,0 +1,103 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #eef2f5;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  gap: 30px;
+}
+
+.container.single {
+  flex-direction: column;
+  max-width: 600px;
+  margin: auto;
+}
+
+.grid-panel, .summary-panel {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.week-grid, .records {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.week-grid th, .week-grid td,
+.records th, .records td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.week-grid tr.today {
+  background: #f0f9ff;
+}
+
+.subject-btn {
+  margin: 4px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  background: #ddd;
+  cursor: pointer;
+}
+
+.subject-btn.marked {
+  background: #4caf50;
+  color: white;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button.danger {
+  background: #e53935;
+}
+
+.history {
+  list-style: none;
+  padding-left: 0;
+}
+
+.history li {
+  margin: 4px 0;
+}
+@media (max-width: 768px) {
+  .timetable-grid {
+    display: block;
+  }
+
+  .timetable-cell {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 786px) {
+  .timetable-grid {
+    display: block;
+  }
+
+  .timetable-cell {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+  .summary-panel {
+    font-size: 1rem;
+  }
+}
