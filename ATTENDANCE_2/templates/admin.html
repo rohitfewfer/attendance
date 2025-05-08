@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Timetable Management</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    form.inline {
+      display: inline-block;
+    }
+    input, select {
+      padding: 4px;
+      margin: 0 4px;
+    }
+    button {
+      padding: 6px 12px;
+      margin: 0 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin: Edit Timetable</h1>
+
+  <h2>Current Entries</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Day</th><th>Position</th><th>Subject</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for e in entries %}
+        <tr>
+          <td>{{ e.id }}</td>
+          <td>{{ e.day }}</td>
+          <td>{{ e.position }}</td>
+          <td>{{ e.subject }}</td>
+          <td>
+            <!-- Delete Button -->
+            <form class="inline" method="POST" action="/admin/delete/{{ e.id }}">
+              <button type="submit" style="background:#e53935;color:white;">Delete</button>
+            </form>
+            <!-- Edit Form -->
+            <form class="inline" method="POST" action="/admin/edit/{{ e.id }}">
+              <select name="day">
+                {% for d in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %}
+                  <option value="{{ d }}" {% if d == e.day %} selected {% endif %}>{{ d }}</option>
+                {% endfor %}
+              </select>
+              <input type="number" name="position" value="{{ e.position }}" required style="width: 80px;">
+              <input type="text" name="subject" value="{{ e.subject }}" required>
+              <button type="submit">Update</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Add New Entry</h2>
+  <form method="POST" action="/admin/add">
+    <select name="day" required>
+      {% for d in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %}
+        <option value="{{ d }}">{{ d }}</option>
+      {% endfor %}
+    </select>
+    <input type="number" name="position" placeholder="Position" required style="width: 80px;">
+    <input type="text" name="subject" placeholder="Subject" required>
+    <button type="submit" style="background:#4caf50;color:white;">Add</button>
+  </form>
+
+  <p><a href="/">Back to Dashboard</a></p>
+</body>
+</html>

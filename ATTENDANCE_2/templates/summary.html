@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Summary Records</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container single">
+    <h2>Saved Daily Summaries</h2>
+    <p><strong>Overall Average:</strong> {{ overall }}%</p>
+    <table class="records">
+      <thead>
+        <tr><th>Date</th><th>Attended</th><th>Total</th><th>%</th></tr>
+      </thead>
+      <tbody>
+        {% for d,a,t,p in summary %}
+        <tr><td>{{ d }}</td><td>{{ a }}</td><td>{{ t }}</td><td>{{ p }}%</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="/"><button>Back Home</button></a>
+  </div>
+</body>
+</html>

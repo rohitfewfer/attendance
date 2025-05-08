@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Attended Classes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container single">
+    <h2>Attended Lectures & Labs</h2>
+    <table class="records">
+      <thead>
+        <tr><th>Subject</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        {% for s,d in records %}
+        <tr><td>{{ s }}</td><td>{{ d }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="/"><button>Back Home</button></a>
+  </div>
+</body>
+</html>
